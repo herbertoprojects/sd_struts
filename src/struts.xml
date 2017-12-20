@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--The core configuration file for the framework is the default (struts.xml) file
+and should reside on the classpath of the webapp (generally /WEB-INF/classes). -->
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- devMode equals debug information and reload everything for every request -->
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.ui.theme" value="simple" />
+	
+	<package name="FrontEnd" namespace="/" extends="struts-default">
+	
+		<global-results>
+			<result name="home" type="redirect">/home</result>
+			<result name="userloggedin" type="redirect">/userhome</result>
+			<result name="adminloggedin" type="redirect">/adminhome</result>
+			<result name="error" type="redirect">/home</result>
+		</global-results>
+		
+		<!-- all exceptions not caught by the application will lead to error.jsp -->
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception" result="error" />
+		</global-exception-mappings>
+		
+		<action name="home">
+	      	<result name="success">/home.jsp</result>
+	    </action>
+		
+	    <action name="userhome">
+	    	<result name="success">/user/home.jsp</result>
+	    </action>
+	    
+	    <action name="adminhome">
+	    	<result name="success">/admin/home.jsp</result>
+	    </action>
+	    
+	    <!-- FACEBOOK -->
+	    <action name="callback" class="FrontEnd.facebook.action.CallbackAction" method="execute">
+	  		<result name="success" type="redirect">/userhome</result>
+	  		<result name="error" type="redirect">/home</result>
+		</action>
+	
+	</package>
+
+</struts>
+	
