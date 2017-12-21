@@ -10,6 +10,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 	<!-- devMode equals debug information and reload everything for every request -->
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.action.excludePattern" value="/ws"/>
 	
 	<package name="FrontEnd" namespace="/" extends="struts-default">
 	
@@ -41,6 +42,13 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 	    <action name="callback" class="FrontEnd.facebook.action.CallbackAction" method="execute">
 	  		<result name="success" type="redirect">/userhome</result>
 	  		<result name="error" type="redirect">/home</result>
+		</action>
+		
+		<!-- LOGIN / REGISTER / LOGOUT -->
+		<action name="login" class="FrontEnd.user.action.LoginAction" method="execute">
+		  	<result name="user_success" type="redirect">/user/home.jsp</result>
+		  	<result name="admin_success" type="redirect">/adminhome</result>
+		 	<result name="error" type="redirect">/home</result>
 		</action>
 	
 	</package>

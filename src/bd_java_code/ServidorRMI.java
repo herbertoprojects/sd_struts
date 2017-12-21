@@ -9,8 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class ServidorRMI extends UnicastRemoteObject implements RMI_1 {
 	
@@ -184,7 +183,37 @@ public class ServidorRMI extends UnicastRemoteObject implements RMI_1 {
 			return null;
 		}
 	}
-
+	
+	/*FACEBOOK*/
+	public boolean associateFacebook(String user_idP, int nccP) throws RemoteException {
+		String comando;
+		String user_id = user_idP;
+		int ncc = nccP;
+		
+		comando = "Select facebook_id from pessoa where facebook_id = "+user_id;
+		ResultSet res = ligacao.executaSQL(comando);
+		if(res==null){return false;}
+		try {
+			if(res.next()) {
+				System.out.println("Conta Facebook já existe!");
+				return false;
+			} else {
+				String comando1;
+				comando1 = "Update pessoa set facebook_id ="+user_id+"where ncc ="+ncc;
+				ligacao.executaUpdateSQL(comando1);
+				return true;
+			}
+		} catch (SQLException e){
+			try{res.close();}catch(Exception e1){}
+			return false;
+		}
+	}
+	
+	/*public boolean removeFacebook(int ncc) {
+		String comando;
+		comando = "Update pessoa set facebook_id == null where ncc ="
+	}*/
+			
 	@Override
 	public ArrayList<Departamento> ListDepartamentos(Faculdade faculdade) throws RemoteException {
 		String comando;
